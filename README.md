@@ -1,4 +1,4 @@
-# project-s3-cfn
+# Project-s3-cfn
 A Secure S3 bucket creation using Cloudformation
 Add additional security features to an existing cloudformation stack.
 
