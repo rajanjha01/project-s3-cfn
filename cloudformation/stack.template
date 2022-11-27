@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Cloudformation template for creating AWS S3 Bucket
+Parameters:
+  BucketName:
+    Type: String
+    Description: >-
+      Name for s3 bucket (Name must begin and end with a letter or number and
+      consist only of lowercase letters, numbers, and hyphens (-).)
+    AllowedPattern: '(?=^.{3,63}$)^[a-z0-9][a-z0-9-]*[a-z0-9]'
+    ConstraintDescription: >-
+      Name must begin and end with a letter or number and consist only of
+      lowercase letters, numbers, and hyphens (-).
+Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub '${BucketName}-s3'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LoggingConfiguration:
+        DestinationBucketName: !Ref LoggingBucket
+        LogFilePrefix: testing-logs
+  LoggingBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      AccessControl: LogDeliveryWrite
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LoggingConfiguration:
+        LogFilePrefix: logbucket-logs
+  MyS3BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref S3Bucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:GetObject'
+            Effect: Deny
+            Resource:
+              - !Sub 'arn:aws:s3:::${S3Bucket}'
+              - !Sub 'arn:aws:s3:::${S3Bucket}/*'
+            Principal:
+              AWS: '*'
+  MyLoggingBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref LoggingBucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:GetObject'
+            Effect: Deny
+            Resource:
+              - !Sub 'arn:aws:s3:::${LoggingBucket}'
+              - !Sub 'arn:aws:s3:::${LoggingBucket}/*'
+            Principal:
+              AWS: '*'
+Outputs:
+  BucketARN:
+    Description: The arn for the bucket that got created
+    Value: !GetAtt S3Bucket.Arn
