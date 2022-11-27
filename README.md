@@ -33,12 +33,19 @@ aws --endpoint-url http://localhost:4566 cloudformation create-stack --stack-nam
 
 ```
 
+<img width="1630" alt="image" src="https://user-images.githubusercontent.com/82893856/204152978-2d9460f8-dd86-4be4-aa3d-8c642c378acb.png">
+
 ## CFN-NAG Report
 
 ### Show last report
+
 ```shell
+docker-compose restart cfn-nag
 docker logs cfn-nag
 
 ```
+
+<img width="713" alt="image" src="https://user-images.githubusercontent.com/82893856/204153034-91d75d08-fd3d-4775-8197-9575942ec903.png">
+
 
 
