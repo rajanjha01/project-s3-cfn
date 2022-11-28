@@ -1,10 +1,8 @@
 # Project-s3-cfn
-A Secure S3 bucket creation using Cloudformation
+A Secure S3 bucket creation using Cloudformation.
 Add additional security features to an existing cloudformation stack.
 
-# Assignment
-
-The current, basic cloudformation template doesn't contain any additional security featuress/configurations. Please have a look at the cfn-nag report. There are a couple of findings which have to be fixed. Please extend the cloudformation template accordingly.
+The current, basic cloudformation template doesn't contain any additional security featuress/configurations.cfn-nag reports show 3 warnings. We will extend the cloudformation template accordingly with all the S3 security features. 
 
 # Setup - 
 
