@@ -6,6 +6,9 @@ The current, basic cloudformation template doesn't contain any additional securi
 
 # Setup - 
 
+## Clone the repo.
+``` cd cloudformation ```
+
 ## Start localstack
 
 ```shell
@@ -13,16 +16,14 @@ docker-compose up
 ```
 
 ## Authentication
+
+Open another terminal and set the creds to interact with AWS localstack.
 ```shell
 export AWS_ACCESS_KEY_ID=xxxx
 export AWS_SECRET_ACCESS_KEY=xxxx
 export AWS_REGION=xxxx
 ```
 ## AWS CLI examples
-### S3
-```shell
-aws --endpoint-url http://localhost:4566 s3api list-buckets
-```
 
 ## Create Stack
 ```shell
@@ -33,6 +34,13 @@ aws --endpoint-url http://localhost:4566 cloudformation create-stack --stack-nam
 
 <img width="1630" alt="image" src="https://user-images.githubusercontent.com/82893856/204152978-2d9460f8-dd86-4be4-aa3d-8c642c378acb.png">
 
+## S3
+
+List the s3 buckets
+
+```shell
+aws --endpoint-url http://localhost:4566 s3api list-buckets
+```
 ## CFN-NAG Report
 
 ### Show last report
